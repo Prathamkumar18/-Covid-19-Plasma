@@ -28,6 +28,20 @@ const donorController = {
           res.status(500).json({ message: 'An error occurred' });
         }
       },
+      deleteDonor: async (req, res) => {
+        try {
+          const { email } = req.body;
+          const deletedDonor = await Donor.findOneAndDelete({ email });
+          if (!deletedDonor) {
+            res.status(404).json({ message: 'Donor not found' });
+          } else {
+            res.status(200).json({ message: 'Donor deleted successfully' });
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'An error occurred' });
+        }
+      },
 };
 
 module.exports = donorController;
